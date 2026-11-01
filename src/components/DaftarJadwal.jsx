@@ -6,10 +6,10 @@ import KartuJadwal from './KartuJadwal';
  * Menampung dan merender list jadwal menggunakan iterasi .map() dari array data.
  * Memiliki fitur conditional rendering apabila data jadwal masih kosong.
  * Didesain menggunakan Tailwind CSS utility classes.
- * @param {Object} props
- * @param {Array} props.jadwalList - Array daftar objek jadwal makan hewan
- * @param {Function} props.onToggleStatus - Handler untuk mengubah status makan
- * @param {Function} props.onHapus - Handler untuk menghapus jadwal
+@param {Object} props
+@param {Array} props.jadwalList - Array daftar objek jadwal makan hewan
+@param {Function} props.onToggleStatus - Handler untuk mengubah status makan
+@param {Function} props.onHapus - Handler untuk menghapus jadwal
  */
 function DaftarJadwal({ jadwalList, onToggleStatus, onHapus }) {
   // State untuk filter tampilan (Semua, Belum Makan, Sudah Makan)
@@ -39,8 +39,8 @@ function DaftarJadwal({ jadwalList, onToggleStatus, onHapus }) {
             <button
               type="button"
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${filter === 'Semua'
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                ? 'bg-teal-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               onClick={() => setFilter('Semua')}
             >
@@ -49,8 +49,8 @@ function DaftarJadwal({ jadwalList, onToggleStatus, onHapus }) {
             <button
               type="button"
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${filter === 'Belum Makan'
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                ? 'bg-teal-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               onClick={() => setFilter('Belum Makan')}
             >
@@ -59,8 +59,8 @@ function DaftarJadwal({ jadwalList, onToggleStatus, onHapus }) {
             <button
               type="button"
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${filter === 'Sudah Makan'
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                ? 'bg-teal-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               onClick={() => setFilter('Sudah Makan')}
             >
@@ -77,7 +77,6 @@ function DaftarJadwal({ jadwalList, onToggleStatus, onHapus }) {
       {jadwalList.length === 0 ? (
         <div className="bg-white border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center flex flex-col items-center justify-center">
           <div className="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center text-2xl mb-3">
-            🥣
           </div>
           <p className="text-base font-bold text-slate-800 mb-1">
             Belum ada data jadwal makan hewan.

@@ -2,17 +2,17 @@
  * Komponen KartuJadwal
  * Menampilkan detail satu jadwal makan hewan berdasarkan data yang diterima via props.
  * Didesain menggunakan Tailwind CSS utility classes.
- * @param {Object} props
- * @param {Object} props.jadwal - Data entitas jadwal makan
- * @param {number|string} props.jadwal.id - Identifier unik jadwal
- * @param {string} props.jadwal.namaHewan - Nama hewan peliharaan
- * @param {string} props.jadwal.jenisHewan - Jenis hewan (Kucing, Anjing, dll)
- * @param {string} props.jadwal.waktuMakan - Jam pemberian makan (format HH:mm)
- * @param {string} props.jadwal.jenisMakanan - Nama/merek pakan
- * @param {string} [props.jadwal.porsi] - Takaran porsi pakan
- * @param {string} props.jadwal.status - Status makan ("Sudah Diberi Makan" | "Belum Diberi Makan")
- * @param {Function} props.onToggleStatus - Fungsi toggle status
- * @param {Function} props.onHapus - Fungsi hapus data jadwal
+@param {Object} props
+@param {Object} props.jadwal - Data entitas jadwal makan
+@param {number|string} props.jadwal.id - Identifier unik jadwal
+@param {string} props.jadwal.namaHewan - Nama hewan peliharaan
+@param {string} props.jadwal.jenisHewan - Jenis hewan (Kucing, Anjing, dll)
+@param {string} props.jadwal.waktuMakan - Jam pemberian makan (format HH:mm)
+@param {string} props.jadwal.jenisMakanan - Nama/merek pakan
+@param {string} [props.jadwal.porsi] - Takaran porsi pakan
+@param {string} props.jadwal.status - Status makan ("Sudah Diberi Makan" | "Belum Diberi Makan")
+@param {Function} props.onToggleStatus - Fungsi toggle status
+@param {Function} props.onHapus - Fungsi hapus data jadwal
  */
 function KartuJadwal({ jadwal, onToggleStatus, onHapus }) {
   const { id, namaHewan, jenisHewan, waktuMakan, jenisMakanan, porsi, status } = jadwal;
@@ -33,9 +33,8 @@ function KartuJadwal({ jadwal, onToggleStatus, onHapus }) {
 
   return (
     <article
-      className={`bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden ${
-        isSudahMakan ? 'border-l-4 border-l-emerald-500' : 'border-l-4 border-l-amber-500'
-      }`}
+      className={`bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden ${isSudahMakan ? 'border-l-4 border-l-emerald-500' : 'border-l-4 border-l-amber-500'
+        }`}
       data-id={id}
     >
       {/* Header Kartu: Avatar, Nama, Jenis, dan Status Badge */}
@@ -58,11 +57,10 @@ function KartuJadwal({ jadwal, onToggleStatus, onHapus }) {
         </div>
 
         <div
-          className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full border ${
-            isSudahMakan
+          className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full border ${isSudahMakan
               ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
               : 'bg-amber-50 text-amber-700 border-amber-200'
-          }`}
+            }`}
         >
           <span>{isSudahMakan ? '✅' : '⏳'}</span>
           <span>{status}</span>
@@ -81,7 +79,7 @@ function KartuJadwal({ jadwal, onToggleStatus, onHapus }) {
 
         <div className="flex flex-col">
           <span className="font-semibold text-xs sm:text-sm text-slate-800">
-            🥣 {jenisMakanan}
+            {jenisMakanan}
           </span>
           {porsi && (
             <span className="text-xs text-slate-500 mt-0.5">
@@ -97,11 +95,10 @@ function KartuJadwal({ jadwal, onToggleStatus, onHapus }) {
           type="button"
           onClick={() => onToggleStatus(id)}
           title={isSudahMakan ? 'Ubah status menjadi Belum Makan' : 'Tandai sudah diberi makan'}
-          className={`flex-1 py-2 px-3.5 rounded-xl text-xs font-bold border transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
-            isSudahMakan
+          className={`flex-1 py-2 px-3.5 rounded-xl text-xs font-bold border transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${isSudahMakan
               ? 'border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600'
               : 'border-emerald-200 bg-emerald-50/90 hover:bg-emerald-100 text-emerald-700'
-          }`}
+            }`}
         >
           {isSudahMakan ? (
             <>

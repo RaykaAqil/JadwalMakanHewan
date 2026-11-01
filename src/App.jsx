@@ -3,6 +3,7 @@ import Header from './components/Header';
 import StatSummary from './components/StatSummary';
 import FormTambahJadwal from './components/FormTambahJadwal';
 import DaftarJadwal from './components/DaftarJadwal';
+import FaktaKucing from './components/FaktaKucing';
 import './App.css';
 
 /**
@@ -96,7 +97,10 @@ function App() {
       {/* 2. Ringkasan Statistik */}
       <StatSummary total={total} sudah={sudah} belum={belum} />
 
-      {/* 3. Area Konten Utama: Form Input & Daftar Jadwal */}
+      {/* 3. Fitur: Fakta Menarik Seputar Kucing (AJAX / API Eksternal) */}
+      <FaktaKucing />
+
+      {/* 4. Area Konten Utama: Form Input & Daftar Jadwal */}
       <main className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Form Tambah Data (Controlled Component) */}
         <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-8">
