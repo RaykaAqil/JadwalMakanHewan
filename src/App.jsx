@@ -1,87 +1,79 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import StatSummary from './components/StatSummary';
 import FormTambahJadwal from './components/FormTambahJadwal';
 import DaftarJadwal from './components/DaftarJadwal';
 import FaktaKucing from './components/FaktaKucing';
+import API_BASE_URL from './config/api';
 import './App.css';
 
-/**
- * Data Awal Realistis (Initial State)
- * Menggunakan data nyata untuk hewan peliharaan (bukan Lorem Ipsum / Dummy genetik)
- */
-const INITIAL_DATA_JADWAL = [
-  {
-    id: 1,
-    namaHewan: 'Mimi',
-    jenisHewan: 'Kucing',
-    waktuMakan: '07:00',
-    jenisMakanan: 'Whiskas Wet Food Tuna',
-    porsi: '1 sachet (85g)',
-    status: 'Sudah Diberi Makan',
-  },
-  {
-    id: 2,
-    namaHewan: 'Bobi',
-    jenisHewan: 'Anjing',
-    waktuMakan: '12:00',
-    jenisMakanan: 'Royal Canin Adult Kibbles',
-    porsi: '1 mangkuk (150g)',
-    status: 'Belum Diberi Makan',
-  },
-  {
-    id: 3,
-    namaHewan: 'Rio',
-    jenisHewan: 'Burung',
-    waktuMakan: '16:00',
-    jenisMakanan: 'Milet & Biji Bunga Matahari',
-    porsi: '2 sendok makan',
-    status: 'Belum Diberi Makan',
-  },
-  {
-    id: 4,
-    namaHewan: 'Mochi',
-    jenisHewan: 'Kelinci',
-    waktuMakan: '08:30',
-    jenisMakanan: 'Timothy Hay & Potongan Wortel',
-    porsi: '1 mangkuk kecil',
-    status: 'Sudah Diberi Makan',
-  },
-];
-
 function App() {
-  // State utama penyimpan daftar jadwal makan hewan
-  const [jadwalList, setJadwalList] = useState(INITIAL_DATA_JADWAL);
+  // State utama penyimpan daftar jadwal makan hewan (dari backend)
+  const [jadwalList, setJadwalList] = useState([]);
 
-  // Handler: Menambahkan data baru ke dalam state array
-  const handleTambahJadwal = (dataBaru) => {
-    const jadwalDenganId = {
-      ...dataBaru,
-      id: Date.now(), // Unique ID menggunakan timestamp
-    };
-    // Menambahkan item baru ke posisi paling depan (prepend)
-    setJadwalList((prevList) => [jadwalDenganId, ...prevList]);
+  // Ambil semua jadwal dari backend saat mount
+  const fetchJadwal = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/jadwal`);
+      if (!res.ok) throw new Error('Gagal mengambil data');
+      const data = await res.json();
+      setJadwalList(data);
+    } catch (err) {
+      console.error('fetchJadwal error:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchJadwal();
+  }, [fetchJadwal]);
+
+  // Handler: Menambahkan data baru ke backend lalu refresh
+  const handleTambahJadwal = async (dataBaru) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/jadwal`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataBaru),
+      });
+      if (!res.ok) throw new Error('Gagal menambah jadwal');
+      await fetchJadwal();
+    } catch (err) {
+      console.error('handleTambahJadwal error:', err);
+    }
   };
 
   // Handler: Toggle status antara 'Sudah Diberi Makan' dan 'Belum Diberi Makan'
-  const handleToggleStatus = (id) => {
-    setJadwalList((prevList) =>
-      prevList.map((item) => {
-        if (item.id === id) {
-          const statusBaru =
-            item.status === 'Sudah Diberi Makan'
-              ? 'Belum Diberi Makan'
-              : 'Sudah Diberi Makan';
-          return { ...item, status: statusBaru };
-        }
-        return item;
-      })
-    );
+  const handleToggleStatus = async (id) => {
+    const item = jadwalList.find((j) => j.id === id);
+    if (!item) return;
+    const statusBaru =
+      item.status === 'Sudah Diberi Makan'
+        ? 'Belum Diberi Makan'
+        : 'Sudah Diberi Makan';
+    try {
+      const res = await fetch(`${API_BASE_URL}/jadwal/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: statusBaru }),
+      });
+      if (!res.ok) throw new Error('Gagal update status');
+      await fetchJadwal();
+    } catch (err) {
+      console.error('handleToggleStatus error:', err);
+    }
   };
 
-  // Handler: Menghapus data jadwal dari state array
-  const handleHapusJadwal = (id) => {
-    setJadwalList((prevList) => prevList.filter((item) => item.id !== id));
+  // Handler: Menghapus data jadwal dari backend
+  const handleHapusJadwal = async (id) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/jadwal/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Gagal menghapus jadwal');
+      await fetchJadwal();
+    } catch (err) {
+      console.error('handleHapusJadwal error:', err);
+    }
   };
 
   // Hitung data ringkasan untuk StatSummary

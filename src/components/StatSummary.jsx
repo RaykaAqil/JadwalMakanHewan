@@ -1,10 +1,10 @@
 /**
  * Komponen StatSummary
  * Menampilkan ringkasan metrik statistik: Total Jadwal, Sudah Diberi Makan, dan Belum Diberi Makan.
- * @param {Object} props
- * @param {number} props.total - Jumlah seluruh jadwal
- * @param {number} props.sudah - Jumlah hewan yang sudah diberi makan
- * @param {number} props.belum - Jumlah hewan yang belum diberi makan
+@param {Object} props
+@param {number} props.total - Jumlah seluruh jadwal
+@param {number} props.sudah - Jumlah hewan yang sudah diberi makan
+@param {number} props.belum - Jumlah hewan yang belum diberi makan
  */
 function StatSummary({ total = 0, sudah = 0, belum = 0 }) {
   const persentaseSudah = total > 0 ? Math.round((sudah / total) * 100) : 0;

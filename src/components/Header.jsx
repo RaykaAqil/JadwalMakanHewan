@@ -1,7 +1,3 @@
-/**
- * Komponen Header
- * Menampilkan judul aplikasi "Jadwal Makan Hewan", logo/ikon, dan sub-judul deskriptif.
- */
 function Header() {
   return (
     <header className="bg-gradient-to-r from-white via-white to-teal-50/50 border border-slate-200/80 rounded-2xl p-6 sm:p-7 mb-7 shadow-sm">
