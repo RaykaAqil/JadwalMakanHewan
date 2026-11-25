@@ -1,4 +1,4 @@
-# 🐾 Jadwal Makan Hewan
+# Jadwal Makan Hewan
 
 Aplikasi manajemen jadwal makan hewan peliharaan dengan frontend React + Vite dan backend NestJS + Prisma + PostgreSQL.
 
@@ -86,7 +86,7 @@ Base URL: `http://localhost:3001`
 
 ```json
 {
-  "namaHewan": "Mimi",
+  "namaHewan": "Ubi",
   "jenisHewan": "Kucing",
   "waktuMakan": "07:00",
   "jenisMakanan": "Whiskas Wet Food Tuna",
